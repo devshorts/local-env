@@ -1,0 +1,10 @@
+#compdef ssh-proxy
+
+local arguments
+
+arguments=(
+'1: :_hosts'
+'2:Port:'
+)
+
+_arguments -s $arguments
