@@ -42,6 +42,10 @@ function decrypt() {
   openssl enc -aes-256-cbc -d -in $1 -out decrypted-$1
 }
 
+function smushfix() {
+  git add --all . && git commit -am "fix" && git smush
+}
+
 function ssh-proxy() {
   HOST=$1
   PORT=$2
@@ -65,14 +69,13 @@ fi
 
 alias emacs=emacsclient
 alias emacs_gui="emacsclient --create-frame"
-alias stripe="cd ~/stripe"
 alias gi=git
 alias paradox="cd ~/src/paradox"
 alias vsc="/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron"
 . $HOME/.zsh/plugins/bd/bd.zsh
 
 git config --global alias.tpush 'push'
-git config --global alias.smush 'rebase -i HEAD~2'
+git config --global alias.smush 'rebase -i master'
 
 autoload -U colors && colors
 
