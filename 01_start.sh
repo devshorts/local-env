@@ -1,4 +1,4 @@
-export GOPATH=$HOME/stripe
+export GOPATH=$HOME/go
 export PATH=$PATH:/$GOPATH/bin
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -11,8 +11,20 @@ function install-icdiff(){
   }
 }
 
+function nb {
+  git checkout -b $USER/$1
+}
+
 function docker-login() {
   . ~/.docker-login
+}
+
+function rb-master() {
+  curr=`git symbolic-ref --short HEAD`
+  git checkout master
+  git pull
+  git checkout $curr
+  git rebase master
 }
 
 function docker-prune() {
@@ -28,6 +40,10 @@ function ssh-gmail-keys(){
 function clean-containers(){
   docker ps -a | grep Exited | xargs docker rm
   docker volume rm $(docker volume ls -qf dangling=true)
+}
+
+function trace() {
+  strace -p $1 -f -s 1000 -e trace=network 2>&1
 }
 
 function gclone(){
@@ -78,4 +94,3 @@ git config --global alias.tpush 'push'
 git config --global alias.smush 'rebase -i master'
 
 autoload -U colors && colors
-
