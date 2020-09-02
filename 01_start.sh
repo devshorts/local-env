@@ -3,28 +3,49 @@ export PATH=$PATH:/$GOPATH/bin
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+. $HOME/src/personal/jira-cli-tooling/jira.sh
 
-function install-icdiff(){
-  hash icdiff 2>/dev/null || {
-    log-info "Installing icdiff"
-    pip install git+https://github.com/jeffkaufman/icdiff.git
+function install-git-diff(){
+  hash delta 2>/dev/null || {
+    log-info "Installing git delta"
+    brew install git-delta
   }
 }
 
 function nb {
-  git checkout -b $USER/$1
+  # git checkout -b $USER/$1
+  new-branch "$"
 }
 
 function docker-login() {
   . ~/.docker-login
 }
 
+# rebase master
 function rb-master() {
   curr=`git symbolic-ref --short HEAD`
   git checkout master
   git pull
   git checkout $curr
   git rebase master
+}
+
+# rebase with master but prefer the master branch for all conflicts
+function rb-master-keep() {
+  curr=`git symbolic-ref --short HEAD`
+  git checkout master
+  git pull
+  git checkout $curr
+  git rebase master -Xours
+}
+
+# rebase with master but prefer the local branch for all conflicts
+function rb-master-discard() {
+  curr=`git symbolic-ref --short HEAD`
+  git checkout master
+  git pull
+  git checkout $curr
+  git rebase master -Xtheirs
 }
 
 function docker-prune() {
@@ -82,6 +103,8 @@ if [[ -f /usr/local/share/chtf/chtf.sh ]]; then
     source "/usr/local/share/chtf/chtf.sh"
 fi
 #emacsd
+
+install-git-diff
 
 alias emacs=emacsclient
 alias emacs_gui="emacsclient --create-frame"
