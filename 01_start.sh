@@ -1,5 +1,6 @@
 export GOPATH=$HOME/go
 export PATH=$PATH:/$GOPATH/bin
+export COPPER_WINSTON_LOG_FORMAT=prettyPrint
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -15,6 +16,28 @@ function install-git-diff(){
 function nb {
   # git checkout -b $USER/$1
   new-branch "$"
+}
+
+function fetchnotes()  {
+   set -x
+   git fetch && git fetch origin refs/notes/commits:refs/notes/origin/commits && git notes merge -v origin/commits
+   set +x
+}
+
+function all {
+  set -x
+  if [[ ! $1 ]]; then
+    echo "Missing commit message"
+  else
+    git add --all .
+    git commit -am "$1"
+  fi
+  set +x
+}
+
+function master {
+  git checkout master
+  git pull
 }
 
 function docker-login() {
@@ -111,9 +134,14 @@ alias emacs_gui="emacsclient --create-frame"
 alias gi=git
 alias paradox="cd ~/src/paradox"
 alias vsc="/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron"
+
 . $HOME/.zsh/plugins/bd/bd.zsh
 
 git config --global alias.tpush 'push'
 git config --global alias.smush 'rebase -i master'
 
 autoload -U colors && colors
+
+# https://docs.github.com/en/github/authenticating-to-github/managing-commit-signature-verification/telling-git-about-your-signing-key
+# if [ -r ~/.zshrc ]; then echo 'export GPG_TTY=$(tty)' >> ~/.zshrc; \
+#   else echo 'export GPG_TTY=$(tty)' >> ~/.zprofile; fi
