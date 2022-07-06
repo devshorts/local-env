@@ -1,12 +1,18 @@
 export GOPATH=$HOME/go
 export PATH=$PATH:/$GOPATH/bin
 export COPPER_WINSTON_LOG_FORMAT=prettyPrint
+export GEM_HOME=/Users/akropp/.gem
+export PATH="$GEM_HOME/bin:$PATH"
 
 prompt steeef
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 . $HOME/src/personal/jira-cli-tooling/jira.sh
+
+# zsh plugins
+. $HOME/.zsh/plugins/bd/bd.zsh
+. $HOME/.zsh/plugins/yarn-autocompletions/yarn-autocompletions.plugin.zsh
 
 function install-git-diff(){
   hash delta 2>/dev/null || {
@@ -22,6 +28,8 @@ export NVM_DIR="$HOME/.nvm"
 detect-installed nvm "brew install nvm"
 
 detect-installed tfenv "brew install tfenv"
+
+detect-installed go "brew install go"
 
 # load fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
