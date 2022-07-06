@@ -2,6 +2,8 @@ export GOPATH=$HOME/go
 export PATH=$PATH:/$GOPATH/bin
 export COPPER_WINSTON_LOG_FORMAT=prettyPrint
 
+prompt steeef
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 . $HOME/src/personal/jira-cli-tooling/jira.sh
@@ -12,6 +14,14 @@ function install-git-diff(){
     brew install git-delta
   }
 }
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # Th\is loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+detect-installed nvm "brew install nvm"
+
+detect-installed tfenv "brew install tfenv"
 
 function nb {
   # git checkout -b $USER/$1
