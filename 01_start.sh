@@ -23,6 +23,9 @@ detect-installed nvm "brew install nvm"
 
 detect-installed tfenv "brew install tfenv"
 
+# load fuzzy finder
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 function nb {
   # git checkout -b $USER/$1
   new-branch "$"
