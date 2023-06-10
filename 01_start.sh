@@ -3,6 +3,14 @@ export PATH=$PATH:/$GOPATH/bin
 export COPPER_WINSTON_LOG_FORMAT=prettyPrint
 export GEM_HOME=/Users/akropp/.gem
 export PATH="$GEM_HOME/bin:$PATH"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby@3.1/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+export PATH="/opt/homebrew/opt/libressl/bin:$PATH"
+export EDITOR=nvim
+export VISUAL=nvim
+
+export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=true
 
 prompt steeef
 
@@ -29,7 +37,12 @@ detect-installed nvm "brew install nvm"
 
 detect-installed tfenv "brew install tfenv"
 
+detect-installed fig "brew install --cask fig"
+
 detect-installed go "brew install go"
+
+# fixes nvm crap
+unset PREFIX
 
 # load fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -155,6 +168,12 @@ alias emacs_gui="emacsclient --create-frame"
 alias gi=git
 alias paradox="cd ~/src/paradox"
 alias vsc="/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron"
+
+function ff() {
+  fmt $1 || git push
+}
+
+alias gg="git push"
 
 . $HOME/.zsh/plugins/bd/bd.zsh
 
