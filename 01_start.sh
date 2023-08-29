@@ -1,5 +1,6 @@
 export GOPATH=$HOME/go
-export PATH=$PATH:/$GOPATH/bin
+export GOROOT="/Users/akropp/go/go1.21.0"
+alias go="$GOROOT/bin/go"
 export COPPER_WINSTON_LOG_FORMAT=prettyPrint
 export GEM_HOME=/Users/akropp/.gem
 export PATH="$GEM_HOME/bin:$PATH"
@@ -7,6 +8,8 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby@3.1/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
 export PATH="/opt/homebrew/opt/libressl/bin:$PATH"
+export PATH="$GOROOT/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 export EDITOR=nvim
 export VISUAL=nvim
 
@@ -71,6 +74,11 @@ function all {
 
 function master {
   git checkout master
+  git pull
+}
+
+function main {
+  git checkout main
   git pull
 }
 
