@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+COMMIT_MSG_FILE=$1
+
+original_message=`cat $COMMIT_MSG_FILE`
+
+LOCAL_PATH="$(pwd)/$(dirname "$0")"
+
+$LOCAL_PATH/lib/prepare-commit-message.rb "$original_message" > "$COMMIT_MSG_FILE"

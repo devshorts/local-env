@@ -1,13 +1,14 @@
 export GOPATH=$HOME/go
-export GOROOT="/Users/akropp/go/go1.21.0"
+GOROOT="/opt/homebrew/opt/go@1.20"
 alias go="$GOROOT/bin/go"
+
 export COPPER_WINSTON_LOG_FORMAT=prettyPrint
-export GEM_HOME=/Users/akropp/.gem
-export PATH="$GEM_HOME/bin:$PATH"
+#export GEM_HOME=/Users/anton.kropp/.gem
+#export PATH="$GEM_HOME/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby@3.1/bin:$PATH"
-export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
 export PATH="/opt/homebrew/opt/libressl/bin:$PATH"
+export PATH="/Applications/IntelliJ IDEA.app/Contents/MacOS:$PATH"
 export PATH="$GOROOT/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export EDITOR=nvim
@@ -43,6 +44,8 @@ detect-installed tfenv "brew install tfenv"
 detect-installed fig "brew install --cask fig"
 
 detect-installed go "brew install go"
+
+detect-installed jira "brew install go-jira"
 
 # fixes nvm crap
 unset PREFIX
@@ -87,18 +90,18 @@ function docker-login() {
 }
 
 # rebase master
-function rb-master() {
+function rb-main() {
   curr=`git symbolic-ref --short HEAD`
-  git checkout master
+  git checkout main
   git pull
   git checkout $curr
-  git rebase master
+  git rebase main
 }
 
 # rebase with master but prefer the master branch for all conflicts
-function rb-master-keep() {
+function rb-main-keep() {
   curr=`git symbolic-ref --short HEAD`
-  git checkout master
+  git checkout main
   git pull
   git checkout $curr
   git rebase master -Xours
@@ -107,10 +110,10 @@ function rb-master-keep() {
 # rebase with master but prefer the local branch for all conflicts
 function rb-master-discard() {
   curr=`git symbolic-ref --short HEAD`
-  git checkout master
+  git checkout main
   git pull
   git checkout $curr
-  git rebase master -Xtheirs
+  git rebase main -Xtheirs
 }
 
 function docker-prune() {
@@ -120,7 +123,7 @@ function docker-prune() {
 }
 
 function ssh-gmail-keys(){
-  ssh-add ~/.ssh/id_rsa.gmail
+  ssh-add ~/.ssh/id_rsa
 }
 
 function clean-containers(){
@@ -177,16 +180,24 @@ alias gi=git
 alias paradox="cd ~/src/paradox"
 alias vsc="/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron"
 
+function fmt () {
+	MESSAGE="${1:=fmt}"
+	noglob git add --all .
+	noglob git commit -am $MESSAGE --no-verify && noglob git push
+}
+
 function ff() {
   fmt $1 || git push
 }
+
+alias ei="idea -e"
 
 alias gg="git push"
 
 . $HOME/.zsh/plugins/bd/bd.zsh
 
 git config --global alias.tpush 'push'
-git config --global alias.smush 'rebase -i master'
+git config --global alias.smush 'rebase -i main'
 
 autoload -U colors && colors
 
