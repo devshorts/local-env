@@ -41,8 +41,6 @@ detect-installed nvm "brew install nvm"
 
 detect-installed tfenv "brew install tfenv"
 
-detect-installed fig "brew install --cask fig"
-
 detect-installed go "brew install go"
 
 detect-installed jira "brew install go-jira"
