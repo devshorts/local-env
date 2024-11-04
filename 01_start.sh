@@ -41,6 +41,8 @@ detect-installed nvm "brew install nvm"
 
 detect-installed tfenv "brew install tfenv"
 
+detect-installed luarocks "brew install luarocks"
+
 detect-installed go "brew install go"
 
 detect-installed jira "brew install go-jira"
@@ -190,7 +192,23 @@ function ff() {
 
 alias ei="idea -e"
 
-alias gg="git push"
+function prp {
+  git pull; git rebase; git push
+}
+
+function push_hard  {
+  git push; prp
+}
+
+function com {
+  git commit -am "$@"
+
+  push_hard
+}
+
+function rcop {
+  rubocop rubocop --restart-server
+}
 
 . $HOME/.zsh/plugins/bd/bd.zsh
 
