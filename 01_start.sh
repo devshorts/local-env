@@ -222,6 +222,12 @@ function rcop {
 git config --global alias.tpush 'push'
 git config --global alias.smush 'rebase -i main'
 
+function ai-diff {
+  git diff -U0 | fabric --pattern create_git_diff_commit
+}
+
+alias aid=ai-diff
+
 autoload -U colors && colors
 
 # https://docs.github.com/en/github/authenticating-to-github/managing-commit-signature-verification/telling-git-about-your-signing-key
