@@ -198,6 +198,7 @@ function ff() {
 }
 
 alias ei="idea -e"
+alias fabric=fabric-ai
 
 function prp {
   git pull; git rebase; git push
@@ -227,6 +228,13 @@ function ai-diff {
 }
 
 alias aid=ai-diff
+
+function aiq {
+  Q="$1"
+  json_string=$(jq -n --arg Q "$Q" '{"model": "llama3.2", "prompt": $Q, "stream": false}')
+
+  curl -s http://localhost:11434/api/generate -d $json_string | jq -r .response
+}
 
 autoload -U colors && colors
 
