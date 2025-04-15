@@ -11,8 +11,8 @@ export PATH="/opt/homebrew/opt/libressl/bin:$PATH"
 export PATH="/Applications/IntelliJ IDEA.app/Contents/MacOS:$PATH"
 export PATH="$GOROOT/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
-export EDITOR=nvim
-export VISUAL=nvim
+export EDITOR=vim
+export VISUAL=vim
 
 export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=true
 
@@ -39,13 +39,20 @@ export NVM_DIR="$HOME/.nvm"
 
 detect-installed nvm "brew install nvm"
 
+detect-installed rbenv "brew install rbenv"
+
 detect-installed tfenv "brew install tfenv"
+
+detect-installed fabric-ai "brew install fabric-ai"
+detect-installed ollama "brew install ollama"
 
 detect-installed luarocks "brew install luarocks"
 
 detect-installed go "brew install go"
 
 detect-installed jira "brew install go-jira"
+
+eval "$(rbenv init - --no-rehash bash)"
 
 # fixes nvm crap
 unset PREFIX
@@ -81,7 +88,7 @@ function master {
 }
 
 function main {
-  git checkout main
+  git checkout master
   git pull
 }
 
