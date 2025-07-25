@@ -16,11 +16,16 @@ export VISUAL=vim
 
 export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=true
 
+source ~/src/.pnpm.completion.zsh
+source ~/.zsh-pnpm-completions/zsh-pnpm-completions.plugin.zsh
+
+
+
 prompt steeef
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-. $HOME/src/personal/jira-cli-tooling/jira.sh
+# . $HOME/src/personal/jira-cli-tooling/jira.sh
 
 # zsh plugins
 . $HOME/.zsh/plugins/bd/bd.zsh
@@ -54,6 +59,9 @@ detect-installed jira "brew install go-jira"
 
 eval "$(rbenv init - --no-rehash bash)"
 
+detect installed claude "npm install -g @anthropic-ai/claude-code"
+
+
 # fixes nvm crap
 unset PREFIX
 
@@ -61,8 +69,8 @@ unset PREFIX
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 function nb {
-  # git checkout -b $USER/$1
-  new-branch "$"
+  git checkout -b $USER/$1
+  # new-branch "$"
 }
 
 function fetchnotes()  {
