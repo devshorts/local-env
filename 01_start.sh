@@ -1,5 +1,5 @@
 export GOPATH=$HOME/go
-GOROOT="/opt/homebrew/opt/go@1.20"
+GOROOT="/opt/homebrew"
 alias go="$GOROOT/bin/go"
 
 export COPPER_WINSTON_LOG_FORMAT=prettyPrint
@@ -9,7 +9,7 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby@3.1/bin:$PATH"
 export PATH="/opt/homebrew/opt/libressl/bin:$PATH"
 export PATH="/Applications/IntelliJ IDEA.app/Contents/MacOS:$PATH"
-export PATH="$GOROOT/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export EDITOR=vim
 export VISUAL=vim
@@ -56,10 +56,13 @@ detect-installed luarocks "brew install luarocks"
 detect-installed go "brew install go"
 
 detect-installed jira "brew install go-jira"
+detect-installed direnv "brew install direnv"
 
 eval "$(rbenv init - --no-rehash bash)"
 
 detect installed claude "npm install -g @anthropic-ai/claude-code"
+
+eval "$(direnv hook zsh)"
 
 
 # fixes nvm crap
