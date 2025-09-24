@@ -2,6 +2,7 @@ export GOPATH=$HOME/go
 GOROOT="/opt/homebrew"
 alias go="$GOROOT/bin/go"
 
+export LOCAL_USER_MODULE_PATH=$USER_MODULE_PATH
 export COPPER_WINSTON_LOG_FORMAT=prettyPrint
 #export GEM_HOME=/Users/anton.kropp/.gem
 #export PATH="$GEM_HOME/bin:$PATH"
@@ -9,8 +10,11 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby@3.1/bin:$PATH"
 export PATH="/opt/homebrew/opt/libressl/bin:$PATH"
 export PATH="/Applications/IntelliJ IDEA.app/Contents/MacOS:$PATH"
+export PATH="/opt/homebrew/opt/trash/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.npm/bin:$PATH"
+export PATH=$PATH:/Users/akropp/bin
 export EDITOR=vim
 export VISUAL=vim
 
@@ -19,7 +23,10 @@ export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=true
 source ~/src/.pnpm.completion.zsh
 source ~/.zsh-pnpm-completions/zsh-pnpm-completions.plugin.zsh
 
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
+fpath=(~/.zsh/completions $fpath)
 
 prompt steeef
 
@@ -57,10 +64,15 @@ detect-installed go "brew install go"
 
 detect-installed jira "brew install go-jira"
 detect-installed direnv "brew install direnv"
+detect-installed trash "brew install trash"
+alias rm=trash
 
 eval "$(rbenv init - --no-rehash bash)"
 
-detect installed claude "npm install -g @anthropic-ai/claude-code"
+detect-installed claude "npm install -g @anthropic-ai/claude-code"
+detect-installed typescript-language-server "npm install -g typescript-language-server"
+
+detect-installed "mcp-language-server"  "go install github.com/isaacphi/mcp-language-server@latest"
 
 eval "$(direnv hook zsh)"
 
@@ -99,7 +111,7 @@ function master {
 }
 
 function main {
-  git checkout master
+  git checkout main
   git pull
 }
 
@@ -198,6 +210,10 @@ alias gi=git
 alias paradox="cd ~/src/paradox"
 alias vsc="/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron"
 
+
+# always make git track upstream
+git config --global push.autoSetupRemote true
+
 function fmt () {
 	MESSAGE="${1:=fmt}"
 	noglob git add --all .
@@ -249,6 +265,43 @@ function aiq {
 
 autoload -U colors && colors
 
-# https://docs.github.com/en/github/authenticating-to-github/managing-commit-signature-verification/telling-git-about-your-signing-key
-# if [ -r ~/.zshrc ]; then echo 'export GPG_TTY=$(tty)' >> ~/.zshrc; \
-#   else echo 'export GPG_TTY=$(tty)' >> ~/.zprofile; fi
+
+function template-mcp {
+  MCP_CWD=`pwd` envsubst < $LOCAL_USER_MODULE_PATH/mcp.template > .mcp.json
+}
+
+function recurse-delete-folder {
+  FOLDER=$1
+
+  if [[ ! -n "$FOLDER" ]]; then
+    echo "Provide a folder to recursively delete."
+
+    return 1
+  fi
+
+  find . -name "$FOLDER" -type d -prune -exec trash -v {} +
+}
+
+# https://github.com/nvm-sh/nvm#zsh
+# respect .nvmrc in files
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
