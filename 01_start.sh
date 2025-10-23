@@ -61,7 +61,8 @@ detect-installed ollama "brew install ollama"
 detect-installed luarocks "brew install luarocks"
 
 detect-installed go "brew install go"
-
+detect-installed clj "brew install clojure/tools/clojure"
+detect-installed lein "brew install clojure/tools/leiningen"
 detect-installed jira "brew install go-jira"
 detect-installed direnv "brew install direnv"
 detect-installed trash "brew install trash"
