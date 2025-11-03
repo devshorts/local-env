@@ -52,9 +52,9 @@ export NVM_DIR="$HOME/.nvm"
 detect-installed nvm "brew install nvm"
 
 detect-installed rbenv "brew install rbenv"
-
+detect-installed go "brew install go"
 detect-installed tfenv "brew install tfenv"
-
+detect-installed atom "brew install atom"
 detect-installed fabric-ai "brew install fabric-ai"
 detect-installed ollama "brew install ollama"
 
