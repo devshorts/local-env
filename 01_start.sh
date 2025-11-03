@@ -59,7 +59,7 @@ detect-installed fabric-ai "brew install fabric-ai"
 detect-installed ollama "brew install ollama"
 
 detect-installed luarocks "brew install luarocks"
-
+detect-installed npm "brew install npm"
 detect-installed go "brew install go"
 detect-installed clj "brew install clojure/tools/clojure"
 detect-installed jira "brew install go-jira"
