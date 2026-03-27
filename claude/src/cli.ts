@@ -32,10 +32,19 @@ proc.stdout.on("data", (chunk: Buffer) => {
     if (!line.trim()) continue;
     try {
       const msg = JSON.parse(line);
-      if (msg.type === "assistant" && msg.subtype === "text") {
-        finalResult += msg.content;
-        const preview = finalResult.slice(-60).replace(/\n/g, " ");
-        spinner.text = preview;
+      if (msg.type === "assistant") {
+        const content = msg.message?.content ?? [];
+        for (const block of content) {
+          if (block.type === "text") {
+            finalResult += block.text;
+            const preview = finalResult.slice(-60).replace(/\n/g, " ");
+            spinner.text = preview;
+          } else if (block.type === "tool_use") {
+            const detail = block.input?.command ?? block.input?.pattern ?? block.input?.file_path ?? "";
+            const short = String(detail).split("\n")[0].slice(0, 60);
+            spinner.text = short ? `[${block.name}] ${short}` : `[${block.name}]`;
+          }
+        }
       } else if (msg.type === "result") {
         finalResult = msg.result ?? finalResult;
       }
