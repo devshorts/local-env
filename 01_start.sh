@@ -390,4 +390,4 @@ fi
 ###-end-npm-completion-###
 
 
-alias claude-prompt='npx tsx ~/src/personal/local-env/claude/src/cli.ts'
+alias claude-prompt='npx tsx ~/src/personal/local-env/claude/cli/src/cli.ts'
