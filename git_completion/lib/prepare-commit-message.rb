@@ -3,7 +3,7 @@
 branch=`git rev-parse --abbrev-ref HEAD`
 
 Jira = Struct.new(:jira)
-Format = /.*-?(ST-[0-9]+)/
+Format = /anton\.kropp\/(.*)\/.*/
 
 def parse_line(line)
   line.match(Format) { |m| Jira.new(*m.captures) }

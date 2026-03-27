@@ -1,0 +1,18 @@
+{
+  "name": "claude-runner",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "claude-runner": "./src/cli.ts"
+  },
+  "scripts": {
+    "start": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "ora": "^8.1.1",
+    "tsx": "^4.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0"
+  }
+}

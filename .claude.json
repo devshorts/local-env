@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "datadog": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/shelfio/datadog-mcp.git@v0.0.5", "datadog-mcp"],
+      "env": {
+        "DD_API_KEY": "${DD_API_KEY}",
+        "DD_APP_KEY": "${DD_APP_KEY}"
+      }
+    },
+    "aws-mcp": {
+      "command": "uvx",
+      "timeout": 100000,
+      "transport": "stdio",
+      "args": [
+        "mcp-proxy-for-aws@latest",
+        "https://aws-mcp.us-east-1.api.aws/mcp"        
+      ]
+    }
+  }
+}
