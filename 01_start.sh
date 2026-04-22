@@ -70,7 +70,8 @@ detect-installed jira "brew install go-jira"
 detect-installed direnv "brew install direnv"
 detect-installed trash "brew install trash"
 detect-installed uv "brew install uv"
-detect-installed podman "brew install podman"
+detect-installed podman "brew qinstall podman"
+detect-installed stackit "brew install getstackit/tap/stackit"
 detect-installed lefthook "brew install lefthook"
 alias rm=trash
 
@@ -88,6 +89,9 @@ fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 
 # fixes nvm crap
 unset PREFIX
+
+eval "$(stackit completion zsh)"
+eval "$(stackit shell zsh)"
 
 # load fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

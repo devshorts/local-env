@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+set -eu
+
+# Make nvm/node/homebrew tools available under a minimal launchd environment.
+export NVM_DIR="$HOME/.nvm"
+# shellcheck disable=SC1091
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+
+STANDUP_DIR="$HOME/Documents/taxbit/standups"
+mkdir -p "$STANDUP_DIR"
+
+DATE_TAG=$(date +%d%m%Y)
+OUTPUT_FILE="$STANDUP_DIR/$DATE_TAG.txt"
+
+# Mirrors the interactive `claude-prompt "/standup"` invocation, but with the
+# full allowlist the /standup command needs (PR, ticket, calendar, Slack data)
+# so unattended runs never stall on a permission prompt.
+npx tsx "$HOME/src/personal/local-env/claude/cli/src/cli.ts" "/standup" -- \
+  --allowedTools \
+    "Bash(date *)" \
+    "Bash(gh search prs *)" \
+    "Bash(gh pr view *)" \
+    "Bash(gh api *)" \
+    "mcp__linear-server__list_issues" \
+    "mcp__claude_ai_Google_Calendar__list_events" \
+    "mcp__claude_ai_Google_Calendar__list_calendars" \
+    "mcp__claude_ai_Slack__slack_search_public_and_private" \
+    "mcp__claude_ai_Slack__slack_search_users" \
+    "mcp__claude_ai_Slack__slack_read_thread" \
+  > "$OUTPUT_FILE" 2>&1
+
+echo "Standup written to $OUTPUT_FILE"
